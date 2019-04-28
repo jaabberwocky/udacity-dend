@@ -6,7 +6,10 @@ from sql_queries import *
 
 def convertToPythonDtypes(data):
     '''
-    Converts from numpy dtypes to python native dtypes. This is because the .values() method sometimes returns numpy dtypes.
+    Converts from list (data) possibly containing numpy dtypes to python native dtypes. This is because the .values() method sometimes returns numpy dtypes.
+
+    Returns:
+    - List with all values converted to native Python dtypes.
     '''
     convertedData = data
     for ind,i in enumerate(convertedData):
@@ -19,6 +22,12 @@ def convertToPythonDtypes(data):
 
 
 def process_song_file(cur, filepath):
+    '''
+    Processes song file (filepath) JSON log files and inserts using DB cursor (cur).
+
+    Returns:
+    None
+    '''
     # open song file
     df = pd.read_json(filepath, lines=True)
 
@@ -32,6 +41,12 @@ def process_song_file(cur, filepath):
 
 
 def process_log_file(cur, filepath):
+    '''
+    Processses log file (filepath) JSON log files and inserts using DB cursor (cur).
+
+    Returns:
+    None
+    '''
     # open log file
     df = pd.read_json(filepath, lines=True)
 
@@ -81,6 +96,12 @@ def process_log_file(cur, filepath):
 
 
 def process_data(cur, conn, filepath, func):
+    '''
+    Runs processing function (func) on file (filepath) given a DB connection (conn) and cursor (cur).
+
+    Returns:
+    None
+    '''
     # get all files matching extension from directory
     all_files = []
     for root, dirs, files in os.walk(filepath):
@@ -100,6 +121,12 @@ def process_data(cur, conn, filepath, func):
 
 
 def main():
+    '''
+    Main entrypoint.
+
+    Returns:
+    None
+    '''
     conn = psycopg2.connect("host=127.0.0.1 dbname=sparkifydb user=student password=student")
     cur = conn.cursor()
 
