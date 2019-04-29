@@ -77,7 +77,6 @@ def process_log_file(cur, filepath):
         cur.execute(user_table_insert, row)
 
     # insert songplay records
-    i = 1
     for index, row in df.iterrows():
         
         # get songid and artistid from song and artist tables
@@ -90,7 +89,7 @@ def process_log_file(cur, filepath):
             songid, artistid = None, None
 
         # insert songplay record
-        songplay_data = (i, row.ts, row.userId, row.level, songid, artistid, row.sessionId, row.location, row.userAgent)
+        songplay_data = (row.ts, row.userId, row.level, songid, artistid, row.sessionId, row.location, row.userAgent)
         cur.execute(songplay_table_insert, songplay_data)
         i += 1
 
